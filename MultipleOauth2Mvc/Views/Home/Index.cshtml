@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "第三方登录测试页面";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Login</h2>
+<input type="button" name="WindowsLive" value="windows live" class="alo" /><br />
+<input type="button" name="Google" value="Google" class="alo" /><br />
+<input type="button" name="Facebook" value="Facebook" class="alo" /><br />
+@*<input type="button" name="Twitter" value="Twitter" class="alo" /><br />
+<input type="hidden" name="twitterValue" id="twitterValue" value="" />*@
+<br />
+<script type="text/javascript">
+    //                if (loginType == "Twitter") {
+    //                    var twitterValue = $("#twitterValue").val();
+    //                    if (!twitterValue) {
+    //                        window.open("/home/" + loginType, "", "height=540,width=740,status=0,location=0,scrollbars=yes,resizable=yes,toolbar=no,top=150,left=200,titlebar=0,menubar=0");
+    //                    }
+    //                    return;
+    //                }
+
+    $(document).ready(function () {
+        $(".alo").live('click', function () {
+            var loginType = $(this).attr("name");
+            var fbHeight = /facebook/ig.test(loginType) ? 340 : 520;
+            if (loginType) {
+                $.ajax({
+                    type: "POST",
+                    url: "/home/login/" + loginType, // + "?bindpage=1"
+                    dataType: 'json',
+                    success: function (d) {
+                        if (d && d.Url) {
+                            openwindow(d.Url, "", 680, fbHeight);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+    function openwindow(url, name, iWidth, iHeight) {
+        var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+        var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+        window.open(url, name, 'height=' + iHeight + ',innerHeight=' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,menubar=no,scrollbars=yes,resizeable=no,location=no,status=no');
+    }
+
+    function abc(data) {
+        console.info(data);
+    }
+</script>

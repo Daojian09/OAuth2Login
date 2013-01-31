@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Twitter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Twitter</h2>
+
+@using (Html.BeginForm())
+{
+    <br />
+    @Html.TextBox("useremail")
+    <input type="submit" name="Submit" value="Submit" />
+}
