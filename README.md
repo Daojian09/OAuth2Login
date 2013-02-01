@@ -6,40 +6,40 @@ Oauth 2 Login
 This is a simple integration of Facebook, Google, Windows Live OAuth 2 login function frame , just get the user information, the user is integrated into the application log in,Agent support setting server configuration as follows:
 
 
-###  
-###  <configSections>
-###    <section name="oauth2.login.configuration" type="Oauth2Login.Configuration.OAuthConfigurationSection, Oauth2Login"/>
-###  </configSections>
-###  <oauth2.login.configuration>
-###    <web acceptedRedirectUrl="~/home/succes" failedRedirectUrl="~/home/error"/>
-###    <oauth>
-###	   <!--<add name="Twitter" type="Oauth2Login.Client.TwitterClient, Oauth2Login"
-###           clientid="GFXaYzb4PUFhGICi4SSug"
-###           clientsecret="IflT0JsoURV9BJ1XmEVdjo2Qohu1l71IWNkfYyfQmk"
-###           callbackUrl="http://github.org/home/succes"
-###           proxy="192.168.0.50:12000"
-###           scope="profile"/>-->
-###      <add name="Google" type="Oauth2Login.Client.GoogleClient, Oauth2Login"
-###           clientid="1095792391040.apps.googleusercontent.com"
-###           clientsecret="LsRFXXHr7T26npBJCBAqvjDi"
-###           callbackUrl="http://github.org/home/succes"
-###           proxy="192.168.0.50:12000"
-###           scope="https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile"/>
-###      <add name="Facebook" type="Oauth2Login.Client.FacebookClient, Oauth2Login"
-###           clientid="	229691003818607"
-###           clientsecret="a0259390c0b20d6855b39b3edcd14c8a"
-###           callbackUrl="http://github.org/home/succes"
-###           proxy="192.168.0.50:12000"
-###           scope="user_about_me,email,user_photos"/>
-###      <add name="WindowsLive" type="Oauth2Login.Client.WindowsLiveClient, Oauth2Login"
-###           clientid="00000000480C9FBC"
-###           clientsecret="hpxlhyxtmABNXFo5qxuAV6pOfZdsyeZF"
-###           callbackUrl="http://github.org/home/succes"
-###           proxy=""
-###           scope="wl.basic,wl.emails"/>   
-###    </oauth>
-###  </oauth2.login.configuration>
- 
+```  
+  <configSections>
+    <section name="oauth2.login.configuration" type="Oauth2Login.Configuration.OAuthConfigurationSection, Oauth2Login"/>
+  </configSections>
+  <oauth2.login.configuration>
+    <web acceptedRedirectUrl="~/home/succes" failedRedirectUrl="~/home/error"/>
+    <oauth>
+	  <!--<add name="Twitter" type="Oauth2Login.Client.TwitterClient, Oauth2Login"
+          clientid="GFXaYzb4PUFhGICi4SSug"
+          clientsecret="IflT0JsoURV9BJ1XmEVdjo2Qohu1l71IWNkfYyfQmk"
+          callbackUrl="http://github.org/home/succes"
+          proxy="192.168.0.50:12000"
+           scope="profile"/>-->
+      <add name="Google" type="Oauth2Login.Client.GoogleClient, Oauth2Login"
+          clientid="1095792391040.apps.googleusercontent.com"
+          clientsecret="LsRFXXHr7T26npBJCBAqvjDi"
+          callbackUrl="http://github.org/home/succes"
+          proxy="192.168.0.50:12000"
+          scope="https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile"/>
+     <add name="Facebook" type="Oauth2Login.Client.FacebookClient, Oauth2Login"
+          clientid="	229691003818607"
+          clientsecret="a0259390c0b20d6855b39b3edcd14c8a"
+          callbackUrl="http://github.org/home/succes"
+          proxy="192.168.0.50:12000"
+          scope="user_about_me,email,user_photos"/>
+     <add name="WindowsLive" type="Oauth2Login.Client.WindowsLiveClient, Oauth2Login"
+          clientid="00000000480C9FBC"
+          clientsecret="hpxlhyxtmABNXFo5qxuAV6pOfZdsyeZF"
+          callbackUrl="http://github.org/home/succes"
+          proxy=""
+          scope="wl.basic,wl.emails"/>   
+    </oauth>
+  </oauth2.login.configuration>
+``` 
 
 
 License
