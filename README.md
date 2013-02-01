@@ -3,8 +3,7 @@ Oauth 2 Login
 	Version 1.0
 	
 	
-This is a simple integration of Facebook, Google, Windows Live OAuth 2 login function frame , just get the user information, the user is integrated into the application log in,Agent support setting server configuration as follows:
-
+This OAuth 2 is a simple login frame with integration of Facebook, Google, Windows Live login function. Just get the user information, the user log in is integrated into application. Support setting server agent configuration as follows:
 
 ```  
   <configSections>
