@@ -6,8 +6,8 @@ just get the user information, the user is integrated into the application log i
 </h3>
 <br/>
 <code>
-  <configSections>
-    <section name="oauth2.login.configuration" type="Oauth2Login.Configuration.OAuthConfigurationSection, Oauth2Login"/>
+  &lt;configSections&gt;
+    &lt;section name="oauth2.login.configuration" type="Oauth2Login.Configuration.OAuthConfigurationSection, Oauth2Login"/&gt;
   </configSections>
   <oauth2.login.configuration>
     <web acceptedRedirectUrl="~/home/succes" failedRedirectUrl="~/home/error"/>
@@ -47,7 +47,7 @@ just get the user information, the user is integrated into the application log i
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at<br/><br/><br/>
 
-       http://www.apache.org/licenses/LICENSE-2.0<br/><br/><br/>
+       http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
