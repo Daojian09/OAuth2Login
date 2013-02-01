@@ -5,27 +5,21 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
-
-  <title>Oauth 2 Login in Framework</title>
+  <title>The Oauth 2 Login in Framework</title>
   <meta name="description" content=" facebook, google ,windows live Oauth 2">
-
   <meta name="viewport" content="width=device-width,initial-scale=1">
-
 </head>
-
 <body>
-
   <div class="wrapper">
     <header>
-      <h1 class="title">Oauth 2 Login in Framework</h1>
+      <h1 class="title">The Oauth 2 Login in Framework</h1>
     </header>
     <div id="container">
-      <p class="tagline"> facebook, google ,windows live Oauth 2</p>
+      <p class="tagline">This OAuth 2 is a login frame with Facebook, google ,windows live .</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
@@ -36,43 +30,56 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h3>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </article>
+         <p>This OAuth 2 is a simple login frame with integration of Facebook, Google, Windows Live login function. Just get the user information, the user log in is integrated into application. Support setting server agent.
+		</p><h6>Configration :</h6>
+<pre>
+&lt;configSections&gt;
+	&lt;section name="oauth2.login.configuration" 
+	type="Oauth2Login.Configuration.OAuthConfigurationSection,
+		Oauth2Login"/&gt;
+&lt;/configSections&gt;
+&lt;oauth2.login.configuration&gt;
+	&lt;web acceptedRedirectUrl="~/home/succes" 
+		failedRedirectUrl="~/home/error"/&gt;
+	&lt;oauth&gt;
+		&lt;add name="Google" type="Oauth2Login.Client.GoogleClient,
+			Oauth2Login"
+			clientid="1095792391040.apps.googleusercontent.com"
+			clientsecret="LsRFXXHr7T26npBJCBAqvjDi"
+			callbackUrl="http://github.org/home/succes"
+			proxy=""
+			scope="https://www.googleapis.com/auth/userinfo.email
+				+https://www.googleapis.com/auth/userinfo.profile"/&gt;
+		&lt;add name="Facebook" type="Oauth2Login.Client.FacebookClient,
+			Oauth2Login"
+			clientid="229691003818607"
+			clientsecret="a0259390c0b20d6855b39b3edcd14c8a"
+			callbackUrl="http://github.org/home/succes"
+			proxy="127.0.0.1:8088"
+			scope="user_about_me,email,user_photos"/&gt;
+		&lt;add name="WindowsLive" type="Oauth2Login.Client.WindowsLiveClient,
+			Oauth2Login"
+			clientid="00000000480C9FBC"
+			clientsecret="hpxlhyxtmABNXFo5qxuAV6pOfZdsyeZF"
+			callbackUrl="http://github.org/home/succes"
+			proxy=""
+			scope="wl.basic,wl.emails"/&gt;   
+	&lt;/oauth&gt;
+&lt;/oauth2.login.configuration&gt;
+</pre>
+</article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/ericzo" class="avatar"><img src="https://secure.gravatar.com/avatar/006efa946812bae7a8c9ba42c747a102?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/ericzo">ericzo</a> maintains <a href="https://github.com/ericzo/Me-Oauth">Oauth 2 Login in Framework</a></p>
-
-
+      <p>
+	  <a href="https://github.com/ericzo" class="avatar">
+	  <img src="https://secure.gravatar.com/avatar/006efa946812bae7a8c9ba42c747a102?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> 
+	  <a href="https://github.com/ericzo">Eric.Zo</a> maintains <a href="https://github.com/ericzo/Me-Oauth">The Oauth 2 Login in Framework</a>
+	  </p>
       </div>
       <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+        <small>Copyright &copy; 2013 By Eric.Zo</small>
       </div>
     </footer>
   </div>
@@ -80,8 +87,6 @@ $ git checkout gh-pages
     <a href="#top">Scroll to top</a>
     <a href="https://github.com/ericzo/Me-Oauth/tarball/master" class="tar">tar</a><a href="https://github.com/ericzo/Me-Oauth/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
-  </div>
-
-  
+  </div>  
 </body>
 </html>
