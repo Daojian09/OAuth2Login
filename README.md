@@ -1,6 +1,6 @@
 Oauth 2 Login 
 ====================================================
-	Version 1.0
+	Version 1.2
 	
 	
 This OAuth 2 is a simple login frame with integration of Facebook, Google, Windows Live login function. Just get the user information, the user log in is integrated into application. Support setting server agent configuration as follows:
@@ -12,13 +12,7 @@ This OAuth 2 is a simple login frame with integration of Facebook, Google, Windo
   <oauth2.login.configuration>
     <web acceptedRedirectUrl="~/home/succes" failedRedirectUrl="~/home/error"/>
     <oauth>
-	  <!--<add name="Twitter" type="Oauth2Login.Client.TwitterClient, Oauth2Login"
-          clientid="GFXaYzb4PUFhGICi4SSug"
-          clientsecret="IflT0JsoURV9BJ1XmEVdjo2Qohu1l71IWNkfYyfQmk"
-          callbackUrl="http://github.org/home/succes"
-          proxy="127.0.0.1:8088"
-           scope="profile"/>-->
-      <add name="Google" type="Oauth2Login.Client.GoogleClient, Oauth2Login"
+     <add name="Google" type="Oauth2Login.Client.GoogleClient, Oauth2Login"
           clientid="1095792391040.apps.googleusercontent.com"
           clientsecret="LsRFXXHr7T26npBJCBAqvjDi"
           callbackUrl="http://github.org/home/succes"
@@ -35,7 +29,13 @@ This OAuth 2 is a simple login frame with integration of Facebook, Google, Windo
           clientsecret="hpxlhyxtmABNXFo5qxuAV6pOfZdsyeZF"
           callbackUrl="http://github.org/home/succes"
           proxy=""
-          scope="wl.basic,wl.emails"/>   
+          scope="wl.basic,wl.emails"/>  
+	 <add name="PayPal" type="Oauth2Login.Client.PayPalClient, Oauth2Login"
+          clientid="AcC2wBD5FPwxscAon02NAgG5lqZYHFtooc3uO0wevS457NPXmCs3jRpBGpPs"
+          clientsecret="ENGDvxAjFRORiCel09c-La25ZEU50VEdF-dwOV6Z2mPui_YS41SOTlDmi2Sw"
+          callbackUrl="http://github.org/home/succe"
+          proxy=""
+          scope="profile email address phone"/>
     </oauth>
   </oauth2.login.configuration>
 ``` 

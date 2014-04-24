@@ -36,6 +36,9 @@ namespace MultipleOauth2Mvc.Controllers
                     case "windowslive":
                         client = Oauth2LoginFactory.CreateClient<WindowsLiveClient>("WindowsLive");
                         break;
+                    case "paypal":
+                        client = Oauth2LoginFactory.CreateClient<PayPalClient>("PayPal");
+                        break;
                     default:
                         return RedirectToAction("index");
                 }
