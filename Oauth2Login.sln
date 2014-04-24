@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleOauth2Mvc", "MultipleOauth2Mvc\MultipleOauth2Mvc.csproj", "{16394330-4EB5-457C-A18A-31BECEE7375D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oauth2Login", "Oauth2Login\Oauth2Login.csproj", "{CB07D752-1BBA-462B-A19D-8A5B21846AFD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{16394330-4EB5-457C-A18A-31BECEE7375D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16394330-4EB5-457C-A18A-31BECEE7375D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16394330-4EB5-457C-A18A-31BECEE7375D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB07D752-1BBA-462B-A19D-8A5B21846AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB07D752-1BBA-462B-A19D-8A5B21846AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB07D752-1BBA-462B-A19D-8A5B21846AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB07D752-1BBA-462B-A19D-8A5B21846AFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
