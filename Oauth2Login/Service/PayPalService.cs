@@ -14,6 +14,18 @@ namespace Oauth2Login.Service
         private static string _oauthUrl = "";
         private AbstractClientProvider _client;
 
+#if DEBUG
+        private const string OAUTH_API_URL = "https://api.sandbox.paypal.com";
+#else
+        private const string OAUTH_API_LIVE_URL = "https://api.paypal.com"; 
+#endif
+
+#if DEBUG
+        private const string OAUTH_API_LOGIN_URL = "https://www.sandbox.paypal.com";
+#else
+        private const string OAUTH_API_LOGIN_URL = "https://www.paypal.com"; 
+#endif
+
         public PayPalService()
         {
         }
@@ -37,7 +49,7 @@ namespace Oauth2Login.Service
         {
             if (_client != null)
             {
-                _oauthUrl = string.Format("https://api.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize?" +
+                _oauthUrl = string.Format(OAUTH_API_LOGIN_URL + "/webapps/auth/protocol/openidconnect/v1/authorize?" +
                                 "client_id={0}&response_type=code&redirect_uri={1}&scope={2}",
                                 _client.ClientId,
                                 HttpUtility.HtmlEncode(_client.CallBackUrl),
@@ -53,7 +65,7 @@ namespace Oauth2Login.Service
             string code = HttpContext.Current.Request.Params["code"];
             if (code != null)
             {
-                string oauthUrl = "https://api.paypal.com/v1/identity/openidconnect/tokenservice";
+                string oauthUrl = OAUTH_API_URL + "/v1/identity/openidconnect/tokenservice";
                 string oAuthCredentials = Convert.ToBase64String(Encoding.Default.GetBytes(_client.ClientId + ":" + _client.ClientSecret));
                 var request = (HttpWebRequest)HttpWebRequest.Create(oauthUrl);
                 request.Method = "POST";
@@ -92,7 +104,7 @@ namespace Oauth2Login.Service
         public Dictionary<string, string> RequestUserProfile()
         {
             string result = "";
-            string profileUrl = string.Format("https://api.paypal.com/v1/identity/openidconnect/userinfo/?schema=openid");
+            string profileUrl = string.Format(OAUTH_API_URL + "/v1/identity/openidconnect/userinfo/?schema=openid");
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(profileUrl);
             request.Headers.Add("Accept-Language", "en_US");
             request.Method = "POST";
