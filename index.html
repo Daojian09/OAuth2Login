@@ -17,7 +17,7 @@
       <h1 class="title">The Oauth 2 Login in Framework</h1>
     </header>
     <div id="container">
-      <p class="tagline">This OAuth 2 is a login frame with Facebook, google ,windows live .</p>
+      <p class="tagline">This OAuth 2 is a login frame with Facebook, google ,windows live,Paypal .</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
@@ -28,7 +28,7 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-         <p>This OAuth 2 is a simple login frame with integration of Facebook, Google, Windows Live login function. Just get the user information, the user log in is integrated into application. Support setting server agent.
+         <p>This OAuth 2 is a simple login frame with integration of Facebook, Google, Windows Live,Paypal login function. Just get the user information, the user log in is integrated into application. Support setting server agent.
 		</p><h6>Configration :</h6>
 <pre>
 &lt;configSections&gt;
@@ -60,7 +60,14 @@
 	  clientsecret="hpxlhyxtmABNXFo5qxuAV6pOfZdsyeZF"
 	  callbackUrl="http://github.org/home/succes"
 	  proxy=""
-	  scope="wl.basic,wl.emails"/&gt;   
+	  scope="wl.basic,wl.emails"/&gt;  
+	&lt;add name="PayPal" 
+	  type="Oauth2Login.Client.PayPalClient, Oauth2Login"
+	  clientid="AcC2wBD5FPwxscAon02NAgG5lqZYHFtooc3uO0wevS457NPXmCs3jRpBGpPs"
+	  clientsecret="ENGDvxAjFRORiCel09c-La25ZEU50VEdF-dwOV6Z2mPui_YS41SOTlDmi2Sw"
+	  callbackUrl="http://github.org/home/succes"
+	  proxy=""
+	  scope="profile email address phone"/&gt;   
   &lt;/oauth&gt;
 &lt;/oauth2.login.configuration&gt;
 </pre>
