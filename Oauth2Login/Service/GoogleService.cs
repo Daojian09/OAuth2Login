@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
+using System.Collections.Specialized;
 using System.Web;
 using Newtonsoft.Json;
 using Oauth2Login.Client;
+using Oauth2Login.Core;
 
 namespace Oauth2Login.Service
 {
@@ -52,38 +52,13 @@ namespace Oauth2Login.Service
             string code = HttpContext.Current.Request.Params["code"];
             if (code != null)
             {
+                string tokenUrl = "https://accounts.google.com/o/oauth2/token";
                 string post = string.Format("code={0}&client_id={1}&client_secret={2}&redirect_uri={3}&grant_type=authorization_code",
                                           code,
                                           HttpUtility.HtmlEncode(_client.ClientId),
                                           _client.ClientSecret,
                                           HttpUtility.HtmlEncode(_client.CallBackUrl));
-                HttpWebRequest request = WebRequest.Create("https://accounts.google.com/o/oauth2/token") as HttpWebRequest;
-                if (request == null)
-                    return "access_denied";
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                if (!string.IsNullOrEmpty(_client.Proxy))
-                {
-                    IWebProxy proxy = new WebProxy(_client.Proxy);
-                    proxy.Credentials = new NetworkCredential();
-                    request.Proxy = proxy;
-                }
-
-                using (StreamWriter sw = new StreamWriter(request.GetRequestStream()))
-                {
-                    sw.Write(post);
-                }
-
-                var resonseJson = "";
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                    {
-                        resonseJson = sr.ReadToEnd();
-                    }
-                }
-
+                string resonseJson = RestfullRequest.Request(tokenUrl, "POST", "application/x-www-form-urlencoded", null, post, _client.Proxy);
                 return JsonConvert.DeserializeAnonymousType(resonseJson, new { access_token = "" }).access_token;
             }
             return "access_denied";
@@ -91,27 +66,13 @@ namespace Oauth2Login.Service
 
         public Dictionary<string, string> RequestUserProfile()
         {
-            string result = "";
             string profileUrl = string.Format("https://www.googleapis.com/oauth2/v1/userinfo?access_token={0}", _client.Token);
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(profileUrl);
-            request.Headers.Add("Accept-Language", "zh-cn");
-
-            if (!string.IsNullOrEmpty(_client.Proxy))
-            {
-                IWebProxy proxy = new WebProxy(_client.Proxy);
-                proxy.Credentials = new NetworkCredential();
-                request.Proxy = proxy;
-            }
-
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    result = sr.ReadToEnd();
-                }
-            }
+            NameValueCollection header = new NameValueCollection();
+            header.Add("Accept-Language", "en_US");
+            string result = RestfullRequest.Request(profileUrl, "GET", "application/x-www-form-urlencoded", header, null, _client.Proxy);
             _client.ProfileJsonString = result;
             GoogleClinet.UserProfile data = JsonConvert.DeserializeAnonymousType(result, new GoogleClinet.UserProfile());
+
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             dictionary.Add("source", "Google");
             dictionary.Add("id", data.Id);

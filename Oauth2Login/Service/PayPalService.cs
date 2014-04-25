@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
+using System.Collections.Specialized;
 using System.Web;
 using Newtonsoft.Json;
 using Oauth2Login.Client;
+using Oauth2Login.Core;
 
 namespace Oauth2Login.Service
 {
@@ -66,68 +65,33 @@ namespace Oauth2Login.Service
             if (code != null)
             {
                 string oauthUrl = OAUTH_API_URL + "/v1/identity/openidconnect/tokenservice";
-                string oAuthCredentials = Convert.ToBase64String(Encoding.Default.GetBytes(_client.ClientId + ":" + _client.ClientSecret));
-                var request = (HttpWebRequest)HttpWebRequest.Create(oauthUrl);
-                request.Method = "POST";
-                //request.Headers["Authorization"] = "Basic " + oAuthCredentials;
-                request.ContentType = "application/x-www-form-urlencoded";
+                //string oAuthCredentials = Convert.ToBase64String(Encoding.Default.GetBytes(_client.ClientId + ":" + _client.ClientSecret));
                 string post = string.Format("grant_type=authorization_code&redirect_uri={0}&code={1}&client_id={2}&client_secret={3}",
                                     HttpUtility.HtmlEncode(_client.CallBackUrl),
                                     code,
                                     _client.ClientId,
                                     _client.ClientSecret);
-
-                if (!string.IsNullOrEmpty(_client.Proxy))
-                {
-                    IWebProxy proxy = new WebProxy(_client.Proxy);
-                    proxy.Credentials = new NetworkCredential();
-                    request.Proxy = proxy;
-                }
-                using (StreamWriter swt = new StreamWriter(request.GetRequestStream()))
-                {
-                    swt.Write(post);
-                }
-
-                var resonseJson = "";
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                    {
-                        resonseJson = sr.ReadToEnd();
-                    }
-                }
-                return JsonConvert.DeserializeAnonymousType(resonseJson, new { access_token = "" }).access_token;
+                string resonseJson = RestfullRequest.Request(oauthUrl, 
+                                                                                        "POST", 
+                                                                                        "application/x-www-form-urlencoded", 
+                                                                                        null, 
+                                                                                        post,
+                                                                                        _client.Proxy);
+              return JsonConvert.DeserializeAnonymousType(resonseJson, new { access_token = "" }).access_token;
             }
             return "access_denied";
         }
 
         public Dictionary<string, string> RequestUserProfile()
-        {
-            string result = "";
+        {           
             string profileUrl = string.Format(OAUTH_API_URL + "/v1/identity/openidconnect/userinfo/?schema=openid");
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(profileUrl);
-            request.Headers.Add("Accept-Language", "en_US");
-            request.Method = "POST";
-            request.Headers["Authorization"] = "Bearer " + _client.Token;
-            request.Accept = "application/json";
-            //request.ContentType = "application/json";
-
-            if (!string.IsNullOrEmpty(_client.Proxy))
-            {
-                IWebProxy proxy = new WebProxy(_client.Proxy);
-                proxy.Credentials = new NetworkCredential();
-                request.Proxy = proxy;
-            }
-
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    result = sr.ReadToEnd();
-                }
-            }
+            NameValueCollection header = new NameValueCollection();
+            header.Add("Accept-Language", "en_US");
+            header.Add("Authorization", "Bearer " + _client.Token);
+            string result = RestfullRequest.Request(profileUrl, "POST", "application/json", header, null, _client.Proxy);
             _client.ProfileJsonString = result;
             PayPalClient.UserProfile data = JsonConvert.DeserializeAnonymousType(result, new PayPalClient.UserProfile());
+
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             dictionary.Add("source", "PayPal");
             dictionary.Add("email", data.Email);

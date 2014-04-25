@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
+using System.Collections.Specialized;
 using System.Web;
 using Newtonsoft.Json;
 using Oauth2Login.Client;
+using Oauth2Login.Core;
 
 namespace Oauth2Login.Service
 {
@@ -58,31 +58,7 @@ namespace Oauth2Login.Service
                                             HttpUtility.HtmlEncode(_client.CallBackUrl),
                                             _client.ClientSecret,
                                             code);
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(tokenUrl);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                if (!string.IsNullOrEmpty(_client.Proxy))
-                {
-                    IWebProxy proxy = new WebProxy(_client.Proxy);
-                    proxy.Credentials = new NetworkCredential();
-                    request.Proxy = proxy;
-                }
-
-                using (StreamWriter sw = new StreamWriter(request.GetRequestStream()))
-                {
-                    sw.Write(post);
-                }
-
-                string resonseJson = "";
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                    {
-                        resonseJson = sr.ReadToEnd();
-                    }
-                }
-
+                string resonseJson = RestfullRequest.Request(tokenUrl, "POST", "application/x-www-form-urlencoded", null, post, _client.Proxy);
                 return JsonConvert.DeserializeAnonymousType(resonseJson, new { access_token = "" }).access_token;
             }
             return "access_denied";
@@ -90,26 +66,12 @@ namespace Oauth2Login.Service
 
         public Dictionary<string, string> RequestUserProfile()
         {
-            string result = "";
+           
             string profileUrl = string.Format("https://apis.live.net/v5.0/me?access_token={0}", _client.Token);
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(profileUrl);
-            request.Headers.Add("Accept-Language", "zh-cn");
-
-            if (!string.IsNullOrEmpty(_client.Proxy))
-            {
-                IWebProxy proxy = new WebProxy(_client.Proxy);
-                proxy.Credentials = new NetworkCredential();
-                request.Proxy = proxy;
-            }
-
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    result = sr.ReadToEnd();
-                }
-            }
-            _client.ProfileJsonString = result;
+            NameValueCollection header = new NameValueCollection();
+            header.Add("Accept-Language", "en_US");
+            string result = RestfullRequest.Request(profileUrl, "GET",null, header, null, _client.Proxy);
+           _client.ProfileJsonString = result;
             WindowsLiveClient.UserProfile data = JsonConvert.DeserializeAnonymousType(result, new WindowsLiveClient.UserProfile());
 
             Dictionary<string, string> dictionary = new Dictionary<string, string>();

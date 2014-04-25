@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
+using System.Collections.Specialized;
 using System.Web;
 using Newtonsoft.Json;
 using Oauth2Login.Client;
+using Oauth2Login.Core;
 
 namespace Oauth2Login.Service
 {
@@ -56,37 +54,14 @@ namespace Oauth2Login.Service
             if (code != null)
             {
                 string tokenUrl = string.Format("https://graph.facebook.com/oauth/access_token?");
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(tokenUrl);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
                 string post = string.Format("client_id={0}&redirect_uri={1}&client_secret={2}&code={3}",
                                             _client.ClientId,
                                             HttpUtility.HtmlEncode(_client.CallBackUrl),
                                             _client.ClientSecret,
                                             code);
-                if (!string.IsNullOrEmpty(_client.Proxy))
-                {
-                    IWebProxy proxy = new WebProxy(_client.Proxy);
-                    proxy.Credentials = new NetworkCredential();
-                    request.Proxy = proxy;
-                }
-
-                using (StreamWriter sw = new StreamWriter(request.GetRequestStream()))
-                {
-                    sw.Write(post);
-                }
-
-                var resonseJson = "";
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                    {
-                        resonseJson = sr.ReadToEnd();
-                    }
-                }
-
+                string resonseJson = RestfullRequest.Request(tokenUrl, "POST", "application/x-www-form-urlencoded", 
+                                                                                        null, post, _client.Proxy);
                 resonseJson = "{\"" + resonseJson.Replace("=", "\":\"").Replace("&", "\",\"") + "\"}";
-
                 return JsonConvert.DeserializeAnonymousType(resonseJson, new { access_token = "" }).access_token;
             }
             return "access_denied";
@@ -94,25 +69,10 @@ namespace Oauth2Login.Service
 
         public Dictionary<string, string> RequestUserProfile()
         {
-            string result = "";
             string profileUrl = string.Format("https://graph.facebook.com/me?access_token={0}", _client.Token);
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(profileUrl);
-            request.Headers.Add("Accept-Language", "zh-cn");
-
-            if (!string.IsNullOrEmpty(_client.Proxy))
-            {
-                IWebProxy proxy = new WebProxy(_client.Proxy);
-                proxy.Credentials = new NetworkCredential();
-                request.Proxy = proxy;
-            }
-
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    result = sr.ReadToEnd();
-                }
-            }
+            NameValueCollection header = new NameValueCollection();
+            header.Add("Accept-Language", "en-US");
+            string result = RestfullRequest.Request(profileUrl, "GET", "application/x-www-form-urlencoded", header,null, _client.Proxy);
             _client.ProfileJsonString = result;
             FacebookClient.UserProfile data = JsonConvert.DeserializeAnonymousType(result, new FacebookClient.UserProfile());
 
@@ -126,7 +86,6 @@ namespace Oauth2Login.Service
             dictionary.Add("gender", data.Gender);
             dictionary.Add("email", data.Email);
             dictionary.Add("picture", data.Picture);
-
             return dictionary;
         }
     }
