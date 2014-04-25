@@ -16,7 +16,7 @@ namespace Oauth2Login.Service
 #if DEBUG
         private const string OAUTH_API_URL = "https://api.sandbox.paypal.com";
 #else
-        private const string OAUTH_API_LIVE_URL = "https://api.paypal.com"; 
+        private const string OAUTH_API_URL = "https://api.paypal.com"; 
 #endif
 
 #if DEBUG
