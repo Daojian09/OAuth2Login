@@ -40,6 +40,9 @@ This OAuth 2 is a simple login frame with integration of Facebook, Google, Windo
   </oauth2.login.configuration>
 ``` 
 
+Nuget
+======================================
+	Install-Package Oauth2Login
 
 License
 ======================================
